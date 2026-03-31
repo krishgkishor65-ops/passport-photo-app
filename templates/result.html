@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Print Passport Photo</title>
+
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial;
+        }
+
+        img {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        @media print {
+            button, a {
+                display: none;
+            }
+
+            img {
+                width: 100%;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+
+</head>
+<body>
+
+<h2>Your Passport Photos</h2>
+
+<img src="data:image/jpeg;base64,{{ image_data }}">
+
+<br><br>
+
+<button onclick="window.print()">🖨️ Print</button>
+
+<br><br>
+
+<a href="/">⬅️ Back</a>
+
+</body>
+</html>
