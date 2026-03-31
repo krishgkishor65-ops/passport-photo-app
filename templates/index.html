@@ -1,183 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Passport Photo Generator</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #1e3c72, #2a5298);
-            margin: 0;
-            color: white;
-            text-align: center;
-        }
-
-        .container {
-            margin-top: 40px;
-        }
-
-        h1 {
-            font-size: 36px;
-            margin-bottom: 5px;
-        }
-
-        .subtitle {
-            color: #ddd;
-            margin-bottom: 25px;
-        }
-
-        .card {
-            background: white;
-            color: black;
-            width: 370px;
-            margin: auto;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-            text-align: left;
-        }
-
-        label {
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        input, select {
-            width: 95%;
-            padding: 10px;
-            margin: 6px 0 15px 0;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-        }
-
-        button {
-            background: #2a5298;
-            color: white;
-            padding: 12px;
-            width: 100%;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #1e3c72;
-        }
-
-        .preview {
-            margin-top: 15px;
-            text-align: center;
-        }
-
-        #preview {
-            max-width: 200px;
-            border-radius: 10px;
-            margin-top: 10px;
-            padding: 10px;
-            background: white;
-        }
-
-        .section-title {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #2a5298;
-        }
-
-        .note {
-            font-size: 12px;
-            color: gray;
-            text-align: center;
-        }
-
-    </style>
+    <title>Passport Photo App</title>
 </head>
-
 <body>
+    <h2>Upload Image</h2>
 
-<div class="container">
-    <h1>📸 Passport Photo Generator</h1>
-    <div class="subtitle">Create professional passport photos in seconds</div>
+    <form action="/process" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" required><br><br>
 
-    <div class="card">
+        <label>Background Color:</label>
+        <select name="bgcolor">
+            <option value="white">White</option>
+            <option value="blue">Blue</option>
+            <option value="red">Red</option>
+            <option value="green">Green</option>
+        </select><br><br>
 
-        <form action="/process" method="POST" enctype="multipart/form-data">
+        <label>Brightness:</label>
+        <input type="number" name="brightness" value="1.0" step="0.1"><br><br>
 
-            <!-- STEP 1 -->
-            <div class="section-title">1️⃣ Choose Your Photo</div>
-            <label>Upload Image</label>
-            <input type="file" name="image" accept="image/*" required onchange="previewImage(event)">
-
-            <!-- STEP 2 -->
-            <div class="section-title">2️⃣ Customize Settings</div>
-
-            <label>Select Background Color</label>
-            <select name="bgcolor" onchange="applyEffects()">
-                <option value="white">White</option>
-                <option value="blue">Blue</option>
-                <option value="red">Red</option>
-                <option value="green">Green</option>
-                <option value="yellow">Yellow</option>
-                <option value="pink">Pink</option>
-                <option value="orange">Orange</option>
-                <option value="purple">Purple</option>
-                <option value="black">Black</option>
-                <option value="gray">Gray</option>
-                <option value="skyblue">Sky Blue</option>
-                <option value="cream">Cream</option>
-            </select>
-
-            <label>Adjust Brightness</label>
-            <input type="number" name="brightness" step="0.1" value="1.0" oninput="applyEffects()">
-
-            <label>Number of Copies</label>
-            <input type="number" name="copies" value="4">
-
-            <button type="submit">✨ Generate Passport Photo</button>
-
-        </form>
-
-        <!-- PREVIEW -->
-        <div class="preview">
-            <p>Live Preview:</p>
-            <img id="preview">
-            <p class="note">
-                *Preview shows brightness & background only. Final result will be processed after clicking generate.
-            </p>
-        </div>
-
-    </div>
-</div>
-
-<script>
-function previewImage(event) {
-    const reader = new FileReader();
-
-    reader.onload = function(){
-        const output = document.getElementById('preview');
-        output.src = reader.result;
-
-        applyEffects();
-    };
-
-    reader.readAsDataURL(event.target.files[0]);
-}
-
-function applyEffects() {
-    const img = document.getElementById('preview');
-
-    if (!img.src) return;
-
-    const brightness = document.querySelector('[name="brightness"]').value;
-    const bgColor = document.querySelector('[name="bgcolor"]').value;
-
-    // Apply brightness
-    img.style.filter = `brightness(${brightness})`;
-
-    // Apply background color preview
-    img.style.backgroundColor = bgColor;
-}
-</script>
-
+        <button type="submit">Process</button>
+    </form>
 </body>
 </html>
