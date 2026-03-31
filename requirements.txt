@@ -1,6 +1,4 @@
 flask
 gunicorn
 pillow
-rembg
-opencv-python-headless
 numpy
